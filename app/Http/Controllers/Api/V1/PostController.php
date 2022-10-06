@@ -5,21 +5,30 @@ namespace App\Http\Controllers\Api\V1;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\PostRequest;
 use App\Http\Resources\PostResource;
+use App\Interfaces\Repositories\PostRepositoryInterface;
 use App\Repository\PostRepository;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 
 class PostController extends Controller
 {
+
+    private $postRepository;
+
+    public function __construct(PostRepositoryInterface $postRepository)
+    {
+        $this->postRepository = $postRepository;
+    }
+
     /**
      * Display a listing of the resource.
      *
      * @param PostRepository $postRepository
      * @return Response
      */
-    public function index(PostRepository $postRepository)
+    public function index()
     {
-        return $postRepository->getAll();
+        return $this->postRepository->getAll();
     }
 
     /**
@@ -40,7 +49,15 @@ class PostController extends Controller
      */
     public function store(PostRequest $request)
     {
-        //
+        if ($post = $this->postRepository->create($request->validated())) {
+            return response([
+                'data' => $post
+            ], 201);
+        }
+
+        return response([
+            'data' => []
+        ], 400);
     }
 
     /**
@@ -50,11 +67,11 @@ class PostController extends Controller
      * @param PostRepository $postRepository
      * @return PostResource|Response
      */
-    public function show($id, PostRepository $postRepository)
+    public function show($id)
     {
 
 
-        if ($post = $postRepository->getById($id)) {
+        if ($post = $this->postRepository->getById($id)) {
             return new PostResource($post);
         }
 
@@ -93,8 +110,8 @@ class PostController extends Controller
      * @param PostRepository $postRepository
      * @return Response
      */
-    public function destroy($id, PostRepository $postRepository)
+    public function destroy($id)
     {
-        return $postRepository->deleteById($id);
+        return $this->postRepository->deleteById($id);
     }
 }

@@ -10,6 +10,16 @@ class PostTranslation extends Model
 {
     use HasFactory;
 
+    protected $fillable = [
+        'post_id',
+        'language_id',
+        'title',
+        'description',
+        'content',
+    ];
+
+    public $timestamps = false;
+
     /**
      * @return BelongsTo
      */

@@ -3,7 +3,9 @@
 namespace App\Repository;
 
 use App\Interfaces\Repositories\PostRepositoryInterface;
+use App\Models\Language;
 use App\Models\Post;
+use App\Models\PostTranslation;
 
 class PostRepository implements PostRepositoryInterface
 {
@@ -23,7 +25,21 @@ class PostRepository implements PostRepositoryInterface
 
     public function create(array $postDetails)
     {
-        // TODO: Implement create() method.
+        if (!isset($postDetails['data'])) return;
+        $data = $postDetails['data'];
+        if (empty($data)) return;
+
+        $post = Post::create();
+
+        if (count($data) != count($data, 1)) {
+            foreach ($data as $item) {
+                $this->createPostTranslation($item, $post);
+            }
+        } else {
+            $this->createPostTranslation($data, $post);
+        }
+
+        return $post->load('postTranslations');
     }
 
     public function update($postId, array $newDetails)
@@ -42,5 +58,24 @@ class PostRepository implements PostRepositoryInterface
     public function deleteAll()
     {
         // TODO: Implement deleteAll() method.
+    }
+
+    /**
+     * @param mixed $item
+     * @param $post
+     * @return void
+     */
+    public function createPostTranslation(array $item, $post): void
+    {
+        //todo validation
+        if ($lang = Language::where('prefix', @$item['locale'])->first()) {
+            PostTranslation::create([
+                'post_id' => $post->id,
+                'language_id' => $lang->id,
+                'title' => $item['title'],
+                'description' => $item['description'],
+                'content' => $item['content'],
+            ]);
+        }
     }
 }
