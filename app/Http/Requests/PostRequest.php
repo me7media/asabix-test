@@ -24,7 +24,20 @@ class PostRequest extends FormRequest
     public function rules()
     {
         return [
-            'data' => 'required',
+            'data' => 'present|array',
+            'data.*.title' => 'required|string',
+            'data.*.description' => 'required|string',
+            'data.*.content' => 'required|string',
+        ];
+    }
+
+
+    public function messages()
+    {
+        return [
+            'data.*.title.required' => 'Title is required!',
+            'data.*.description.required' => 'dDescription is required!',
+            'data.*.content.required' => 'Content is required!',
         ];
     }
 }

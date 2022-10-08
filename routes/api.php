@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Api\V1\LanguagesController;
 use App\Http\Controllers\Api\V1\TagController;
 use App\Http\Controllers\Api\V1\PostController;
 use Illuminate\Http\Request;
@@ -21,6 +22,9 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 Route::prefix('v1')->group(function () {
+    Route::get('languages', [LanguagesController::class, 'index']);
+
     Route::apiResource('posts', PostController::class);
     Route::apiResource('tags', TagController::class);
 });
+

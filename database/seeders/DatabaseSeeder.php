@@ -16,17 +16,6 @@ class DatabaseSeeder extends Seeder
     {
         // \App\Models\User::factory(10)->create();
 
-         \App\Models\Language::create([
-             'locale' => 'UA',
-             'prefix' => 'ua',
-         ]);
-         \App\Models\Language::create([
-             'locale' => 'RU',
-             'prefix' => 'ru',
-         ]);
-         \App\Models\Language::create([
-             'locale' => 'EN',
-             'prefix' => 'en',
-         ]);
+        $this->call(LanguageSeed::class);
     }
 }

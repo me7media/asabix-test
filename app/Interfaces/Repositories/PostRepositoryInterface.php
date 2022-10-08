@@ -9,5 +9,4 @@ interface PostRepositoryInterface
     public function create(array $postDetails);
     public function update($postId, array $newDetails);
     public function deleteById($postId);
-    public function deleteAll();
 }

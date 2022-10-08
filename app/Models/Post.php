@@ -17,7 +17,18 @@ class Post extends Model
      */
     public function postTranslations(): HasMany
     {
-        return $this->hasMany(PostTranslation::class);
+        return $this->hasMany(PostTranslation::class)
+            ->groupBy('language_id');
+    }
+
+    /**
+     * @return HasMany
+     */
+    public function postTranslationsGrouped(): HasMany
+    {
+        return $this->hasMany(PostTranslation::class)
+            ->join('languages', 'languages.id', '=', 'post_translations.language_id')
+            ->groupBy(['locale', 'prefix']);
     }
 
     /**
@@ -27,4 +38,5 @@ class Post extends Model
     {
         return $this->hasManyThrough(Tag::class, PostTag::class);
     }
+
 }

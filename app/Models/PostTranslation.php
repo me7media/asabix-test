@@ -2,13 +2,19 @@
 
 namespace App\Models;
 
+use App\Models\Traits\HasCompositePrimaryKey;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class PostTranslation extends Model
 {
-    use HasFactory;
+    use HasFactory, HasCompositePrimaryKey;
+
+    protected $primaryKey = ['post_id', 'language_id'];
+    public $incrementing = false;
+
+    public $timestamps = false;
 
     protected $fillable = [
         'post_id',
@@ -18,7 +24,6 @@ class PostTranslation extends Model
         'content',
     ];
 
-    public $timestamps = false;
 
     /**
      * @return BelongsTo
