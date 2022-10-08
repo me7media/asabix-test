@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Repository;
+namespace App\Repository\Eloquent;
 
 use App\Interfaces\Repositories\PostRepositoryInterface;
 use App\Models\Language;

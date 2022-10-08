@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Api\V1\LanguagesController;
+use App\Http\Controllers\Api\V1\PostTagsController;
 use App\Http\Controllers\Api\V1\TagController;
 use App\Http\Controllers\Api\V1\PostController;
 use Illuminate\Http\Request;
@@ -25,6 +26,10 @@ Route::prefix('v1')->group(function () {
     Route::get('languages', [LanguagesController::class, 'index']);
 
     Route::apiResource('posts', PostController::class);
+
+    Route::post('posts/{id}/tags', [PostTagsController::class, 'store']);
+    Route::get('posts/{id}/tags', [PostTagsController::class, 'show']);
+
     Route::apiResource('tags', TagController::class);
 });
 

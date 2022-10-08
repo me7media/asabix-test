@@ -24,7 +24,8 @@ class TagRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => 'required|string',
+            'data' => 'present|array',
+            'data.*.name' => 'required|string',
         ];
     }
 }

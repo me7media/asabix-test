@@ -126,14 +126,4 @@ class PostController extends Controller
         return $this->emptyJsonResponse(Response::HTTP_NOT_FOUND);
     }
 
-    /**
-     * @param int $statusCode
-     * @return JsonResponse
-     */
-    public function emptyJsonResponse(int $statusCode): JsonResponse
-    {
-        return response()->json([
-            'data' => []
-        ], $statusCode);
-    }
 }

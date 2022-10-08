@@ -9,5 +9,4 @@ interface TagRepositoryInterface
     public function create(array $tagDetails);
     public function update($tagId, array $newDetails);
     public function deleteById($tagId);
-    public function deleteAll();
 }
